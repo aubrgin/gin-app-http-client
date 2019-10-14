@@ -1,7 +1,7 @@
 {
-  "name": "@aubrgin/gin-app-sql",
+  "name": "@aubrgin/gin-app-http-client",
   "version": "0.2.3",
-  "main": "dist/@aubrgin/gin-app-sql.umd.min.js",
+  "main": "dist/@aubrgin/gin-app-http-client.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --dest dist/ src/main.js",
