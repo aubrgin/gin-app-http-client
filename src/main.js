@@ -5,7 +5,7 @@ import Vue from 'vue';
 
 if (process.env.NODE_ENV !== 'production') {
   new Vue({
-    render: (h) => h(Sql),
+    render: (h) => h(App),
   }).$mount('#app');
   
   function injectCss(css) {
@@ -17,6 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
   }
   
   injectCss(fs.readFileSync(`${ginFs.ginPath}/${ginFs.getConfig('theme', 'gin')}`));
+  injectCss(fs.readFileSync('node_modules/@aubrgin/gin-components/dist/@aubrgin/gin-components.css'));
 }
 
 
