@@ -1,26 +1,24 @@
 <template>
   <div class="gin-http-client">
-    <div class="url">
+    <div class="field">
       <gin-label label="URL" />
       <gin-input v-model="host" label="Host" />
       <gin-input v-model="route" label="Route" />
     </div>
-    <div class="headers">
+    <div class="field">
       <div class="headers-tree">
         <gin-tree label="Headers" v-model="headers" :edit="true" />
       </div>
     </div>
-    <div class="payload">
+    <div class="field">
       <div class="payload-tree">
         <gin-tree label="Payload" v-model="payload" :edit="true" />
       </div>
     </div>
-    <select v-model="method">
-      <option value="get"> GET </option>
-      <option value="post"> POST </option>
-      <option value="patch"> PATCH </option>
-      <option value="delete"> DELETE </option>
-    </select>
+    <div class="field">
+      <gin-label label="Method" />
+      <gin-select v-model="method" :options="methods" />
+    </div>
     <div>
     <gin-button @click="send">
       Send
@@ -32,7 +30,7 @@
 </template>
 
 <script>
-import { GinInput, GinButton, GinTree, GinLabel } from '@aubrgin/gin-components';
+import { GinInput, GinButton, GinTree, GinLabel, GinSelect } from '@aubrgin/gin-components';
 import axios from 'axios';
 
 export default {
@@ -42,6 +40,7 @@ export default {
      GinButton,
      GinTree,
      GinLabel,
+     GinSelect,
    },
    computed: {
      url() {
@@ -53,6 +52,13 @@ export default {
        route: '',
        host: '',
        method: 'get',
+       methods: [
+         'get',
+         'post',
+         'patch',
+         'put',
+         'delete',
+       ],
        payload: {},
        headers: {},
        data: {},
@@ -63,7 +69,7 @@ export default {
      async send() {
        this.loading = true;
        const response = await axios[this.method](this.url, { params: this.payload});
-       this.data = response.data;
+       this.data = response;
 
        this.loading = false;
      },
@@ -73,31 +79,10 @@ export default {
 
 <style lang="scss">
  .gin-http-client {
-   .url {
-     margin: 16px;
-
-     .gin-label {
-       margin-bottom: 16px;
-     }
-
-     .gin-input-container {
-       margin-bottom: 32px;
-     }
-   }
-
-   .headers {
+   .field {
      margin: 16px;
 
      .headers-tree {
-       width: 60%;
-       margin: 0px;
-     }
-   }
-
-   .payload {
-     margin: 16px;
-
-     .payload-tree {
        width: 60%;
        margin: 0px;
      }
