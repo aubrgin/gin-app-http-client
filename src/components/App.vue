@@ -1,18 +1,18 @@
 <template>
   <div class="gin-http-client">
     <div class="url">
-      <gin-input v-model="url" label="url" />
+      <gin-label label="URL" />
+      <gin-input v-model="host" label="Host" />
+      <gin-input v-model="route" label="Route" />
     </div>
     <div class="headers">
-      Headers
       <div class="headers-tree">
-        <gin-tree v-model="headers" />
+        <gin-tree label="Headers" v-model="headers" :edit="true" />
       </div>
     </div>
     <div class="payload">
-      Payload
       <div class="payload-tree">
-        <gin-tree v-model="payload" />
+        <gin-tree label="Payload" v-model="payload" :edit="true" />
       </div>
     </div>
     <select v-model="method">
@@ -27,12 +27,12 @@
     </gin-button>
     </div>
 
-    <gin-tree class="data" :value="data" v-if="data" />
+    <gin-tree label="Data" class="data" :value="data" v-if="data" />
   </div>
 </template>
 
 <script>
-import { GinInput, GinButton, GinTree } from '@aubrgin/gin-components';
+import { GinInput, GinButton, GinTree, GinLabel } from '@aubrgin/gin-components';
 import axios from 'axios';
 
 export default {
@@ -41,14 +41,21 @@ export default {
      GinInput,
      GinButton,
      GinTree,
+     GinLabel,
+   },
+   computed: {
+     url() {
+       return `${this.host}/${this.route}`;
+     },
    },
    data() {
      return {
-       url: '',
+       route: '',
+       host: '',
        method: 'get',
        payload: {},
        headers: {},
-       data: undefined,
+       data: {},
        loading: false,
      }
    },
@@ -68,6 +75,14 @@ export default {
  .gin-http-client {
    .url {
      margin: 16px;
+
+     .gin-label {
+       margin-bottom: 16px;
+     }
+
+     .gin-input-container {
+       margin-bottom: 32px;
+     }
    }
 
    .headers {
